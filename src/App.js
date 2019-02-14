@@ -1,26 +1,73 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {
+  HashRouter as Router,
+  Route
+} from 'react-router-dom'
+
 import './App.css';
+import PlayerContainer from './player/PlayerContainer';
+import Home from './Home';
+
+
+export const items = [
+  {
+    "type": "PROGRAM",
+    "guid": "BBJ1733181A",
+    "displayTitle": "Venom",
+    "offerTypes": [
+      "TVOD",
+      "EST"
+    ],
+    "genres": [
+      "Sci-Fi"
+    ],
+    "packshot": "content_providers/images/7236321_f5676325dc5958f8_SHRP.jpg",
+    "anchors": {
+
+    }
+  },
+  {
+    "type": "PROGRAM",
+    "guid": "BBJ1728905A",
+    "displayTitle": "First Man",
+    "offerTypes": [
+      "EST"
+    ],
+    "genres": [
+      "Drama"
+    ],
+    "packshot": "content_providers/images/7182152_c101f6639e6488e3_SHRP.jpg",
+    "anchors": {
+
+    }
+  },
+  {
+    "type": "PROGRAM",
+    "guid": "BBJ1727836A",
+    "displayTitle": "Johnny English Strikes Again",
+    "offerTypes": [
+      "EST"
+    ],
+    "genres": [
+      "Comedy"
+    ],
+    "packshot": "content_providers/images/6813515_3e4d5d3dd8b7ff62_SHRP.jpg",
+    "anchors": {
+
+    }
+  }
+];
 
 class App extends Component {
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div className="container">
+          <Route exact path="/" component={Home}/>
+          <Route path="/player" component={PlayerContainer}/>
+        </div>
+      </Router>
     );
   }
 }

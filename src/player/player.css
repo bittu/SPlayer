@@ -1,0 +1,392 @@
+.player-poster {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.player-wrapper {
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+
+.player-wrapper {
+  color: #ffffff;
+  clear: both;
+}
+
+.player-titleLayer,
+.player-overlay,
+.player-infoLayer,
+.player-seasonInfoLayer,
+.player-controlBar,
+.player-video {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+.player-titleLayer,
+.player-overlay,
+.player-video {
+  top: 0;
+}
+
+.player-infoLayer,
+.player-overlay,
+.player-loading,
+.player-video {
+  width: 100%;
+  height: 100%;
+}
+.player-video {
+  background: rgba(0, 0, 0, 0.5);
+}
+.player-overlay,
+.player-infoLayer {
+  z-index: 1;
+}
+.player-controlBar {
+  bottom: 0;
+  display: flex;
+  padding: 25px 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  z-index: 5;
+  align-items: center;
+}
+.player-controlBar button,
+.player-controlBar time,
+.player-controlBar__seekBar,
+.player-titleLayer__close,
+.player-infoLayer__arrow {
+  margin-right: 15px;
+  color: #ffffff;
+  background: transparent;
+  outline: 0;
+  border: 0;
+}
+
+.player-titleLayer {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  height: 100px;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+}
+.player-titleLayer__title {
+  margin-left: 20px;
+  font-size: 14px;
+}
+.player-titleLayer__close {
+  margin-right: 20px;
+}
+
+
+.player-controlBar .actionLogo  {
+  font-size: 30px;
+}
+.player-controlBar time {
+  font-size: 16px;
+  margin: 10px 20px 0;
+}
+button.player-controlBar__fullScreen {
+  margin-right: 35px;
+  margin-bottom: 7px;
+}
+.player-controlBar__play {
+  margin-left: 15px;
+}
+
+.player-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.player-loading img {
+  width: 75px;
+  height: 75px;
+  z-index: 1;
+  animation: spin 1s linear infinite;
+}
+
+/* Volume bar */
+.player-controlBar__volume {
+  position: relative;
+}
+.player-controlBar__volumeOverlay {
+  position: absolute;
+  width: 25px;
+  height: 125px;
+  top: 0;
+  left: 0;
+  background: red;
+  z-index: 1;
+}
+.player-controlBar__volumeBar {
+  position: absolute;
+  top: -70px;
+  left: -33px;
+  background: #ffffff;
+  height: 25px;
+  width: 100px;
+  border-radius: 10px;
+  transform: rotate(270deg);
+  /*display: none;*/
+  z-index: 2;
+}
+.player-controlBar__volumeBar::after {
+  right: 98%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-right-color: #ffffff;
+	border-width: 8px;
+	margin-top: -8px;
+}
+.player-controlBar__volumeBar-show,
+.player-controlBar__volumeBar-show {
+  display: block;
+}
+.player-controlBar__volumeTrack {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 80px;
+  height: 5px;
+  position: absolute;
+  top: 10px;
+  left: 8px;
+}
+input[type=range].player-controlBar__volumeRange {
+  opacity: 0;
+  z-index: 1;
+  width: 80px;
+  position: absolute;
+  top: -10px;
+}
+
+.player-controlBar__volumeFill {
+  background-color: #00427e;
+  position: absolute;
+  left: 0px;
+  height: 100%;
+}
+.player-controlBar__volumeFill::after {
+  content: '';
+  border: 5px solid #00427e;
+  border-radius: 50%;
+  position: absolute;
+  right: -5px;
+  top: -2.5px;
+}
+
+/* Info layer */
+.player-infoLayer,
+.player-seasonInfoLayer {
+  background: linear-gradient(to top, rgba(0, 66, 126, 0.7), rgba(0, 0, 0, 0));
+  text-align: left;
+}
+.player-infoLayer__wrapper {
+  position: absolute;
+  bottom: 70px;
+  left: 0;
+  margin: 20px;
+  width: 100%;
+}
+.player-infoLayer__arrow {
+  position: absolute;
+  right: 0;
+  margin-right: 40px;
+}
+.player-infoLayer__content {
+  margin-left: 25px;
+}
+.player-infoLayer__content p {
+  margin-bottom: 15px;
+}
+.player-infoLayer__heading,
+.player-infoLayer__strapline {
+  font-family: BTTV_ExBd;
+  font-size: 29px;
+  font-weight: 800;
+  line-height: 0.93;
+  letter-spacing: 1.2px;
+}
+.player-infoLayer__strapline {
+  font-size: 18px;
+}
+.player-infoLayer__description {
+  font-family: BTTV_Rg;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.36;
+  letter-spacing: 0.6px;
+  color: hsla(0, 0%, 100%, 0.8);
+  min-height: 50px;
+}
+
+/* full screen */
+
+html:-ms-fullscreen {
+	width:100%;
+}
+.player-wrapper.player-fullscreen video {
+	height: auto;
+}
+
+.player-wrapper.player-fullscreen .player-titleLayer,
+.player-wrapper.player-fullscreen .player-controlBar__info {
+  display: flex;
+  z-index: 2;
+}
+
+.player-wrapper.player-fullscreen .player-controlBar {
+  background: linear-gradient(to top, rgba(0, 66, 126, 0.7), rgba(0, 0, 0, 0));
+}
+
+/* seek bar */
+
+.player-controlBar__seekBar {
+    flex-grow: 1;
+    position: relative;
+    margin: 10px 20px 0;
+}
+.player-controlBar__seekTrack {
+  right: 0;
+  height: 5px;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.player-controlBar__seekTrack,
+.player-controlBar__seekBuffer,
+.player-controlBar__seekFill,
+.player-controlBar__seekRange,
+.player-controlBar__volumeRange {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.player-controlBar__volumeTrack,
+.player-controlBar__volumeFill,
+.player-controlBar__volumeRange {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.player-controlBar__seekBuffer,
+.player-controlBar__seekFill,
+.player-controlBar__seekRange {
+  height: 100%;
+}
+.player-controlBar__seekBuffer {
+  background-color: #5a5a5a;
+}
+.player-controlBar__seekFill {
+  background: #ff00fc;
+}
+.player-controlBar__seekFill::after {
+  content: '';
+  border: 8px solid #ff00fc;
+  border-radius: 50%;
+  position: absolute;
+  right: -5px;
+  top: -5px;
+}
+
+.player-controlBar__seekRange {
+  width: 100%;
+  left: -3px;
+}
+
+.player-controlBar button,
+.player-controlBar__seekRange,
+.player-controlBar__volumeRange,
+.player-infoLayer__arrow,
+.player-titleLayer__close {
+  cursor: pointer;
+}
+
+.player-wrapper .mainLoadingIndicator img.loadingSpinner {
+  max-width: 100%;
+  max-height: 100%;
+  width: 75px;
+  height: 75px;
+  margin-top: -100px;
+}
+
+input[type=range] {
+  appearance: none;
+  background: transparent;
+  outline: 0;
+  border: 0;
+  opacity: 0;
+}
+::-ms-tooltip { display: none; }
+
+/* Animation */
+.fade-enter {
+  opacity: 0;
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  animation-play-state: paused;
+}
+.fade-appear {
+  opacity: 0;
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  animation-play-state: paused;
+}
+.fade-leave {
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  animation-play-state: paused;
+}
+.fade-enter.fade-enter-active {
+  animation-name: fadeIn;
+  animation-play-state: running;
+}
+.fade-appear.fade-appear-active {
+  animation-name: fadeIn;
+  animation-play-state: running;
+}
+.fade-leave.fade-leave-active {
+  animation-name: fadeOut;
+  animation-play-state: running;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

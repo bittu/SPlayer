@@ -30,3 +30,228 @@
     transform: rotate(360deg);
   }
 }
+
+
+.packshot-wrapper {
+	display: flex;
+	flex-direction: column;
+	width: 22%;
+	height: auto;
+	margin-right: 20px;
+	margin-bottom: 20px;
+  transition: transform 0.3s;
+}
+.packshot-wrapper.selected {
+  box-shadow: 0px 5px 15px 0 rgba(0, 0, 0, 0.35);
+  background-color: #fff;
+  color: #0e0b6f;
+  transform: scale(1.05);
+}
+.packshot-img-container {
+	position: relative;
+  cursor: pointer;
+}
+.packshot__img {
+	width: 100%;
+	box-shadow: 0px 5px 15px 0 rgba(0, 0, 0, 0.35);
+}
+.packshot-wrapper.selected .packshot__img {
+  box-shadow: none;
+}
+.font-icon.packshot__play {
+	position: absolute;
+	bottom: 3px;
+	right: 0;
+	padding: 10px 5px 10px 10px;
+  background: #ffffff;
+  color: #080d70;
+  /*box-shadow: 1.3px 2.2px 7.5px 0 rgba(0, 0, 0, 0.35);*/
+  font-size: 25px;
+}
+
+.packshot-info-container {
+	display: flex;
+	justify-content: space-between;
+	margin: 5px;
+  flex-flow: row wrap;
+}
+.packshot-info__description {
+	flex: 1;
+	min-width: 0;
+}
+
+.packshot-info__title,
+.packshot-info__strapline,
+.packshot-info__extra {
+	white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 5px 0;
+  font-weight: bold;
+}
+.packshot-info__title {
+	font-family: BTTV_Bd;
+	font-size: 18.8px;
+	line-height: 1;
+	letter-spacing: 0.8px;
+}
+.packshot-info__strapline {
+	text-transform: uppercase;
+  font-family: BTTV_Rg;
+  font-size: 12.8px;
+  letter-spacing: 1.3px;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0;
+}
+.packshot-wrapper.selected .packshot-info__strapline {
+  color: #b7b7cc;
+}
+.packshot-info__extra {
+	display: flex;
+	font-size: 12.8px;
+  line-height: 1;
+  letter-spacing: 1.6px;
+  font-family: BTTV_Rg;
+  font-weight: normal;
+}
+.separator {
+	margin: 0 5px;
+}
+.packshot-wrapper.selected .font-icon.packshot-info__icon {
+  color: #0e0b6f;
+}
+
+/* .theoplayer-container {
+  opacity: 0;
+  transition: 1s opacity;
+}
+.theoplayer-container.show {
+  opacity: 1;
+} */
+
+.dotsContainer{
+  text-align: center;
+  margin: 45px 0;
+  z-index: 2000;
+}
+.startupLoading .dotsContainer{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  text-align: center;
+  margin: 0;
+}
+.dotsContainer span{
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  background: #ffffff;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.dotsContainer span:last-child{
+  margin-right: 0;
+}
+
+/* center alignment of dotsContainer */
+.dotsContainer.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  margin: 0;
+}
+.dotsContainer.center-popup {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  margin: 0;
+}
+.mainLoading .dotsContainer{
+  margin: 0
+}
+
+/*Default Large Dots Animation*/
+.dot1, .dot2, .dot3{
+  animation: jump infinite linear;
+  animation-duration: 1.6s;
+}
+.dot2{
+  animation-delay: 0.2s;
+}
+.dot3{
+  animation-delay: 0.4s;
+}
+@keyframes jump {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+	40% {
+    transform: translateY(-20px) scale(1.7);
+  }
+	60% {
+    transform: translateY(-10px);
+  }
+}
+
+.fade-enter {
+  opacity: 0;
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  animation-play-state: paused;
+}
+
+.fade-appear {
+  opacity: 0;
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  animation-play-state: paused;
+}
+
+.fade-leave {
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  animation-play-state: paused;
+}
+
+.fade-enter.fade-enter-active {
+  animation-name: fadeIn;
+  animation-play-state: running;
+}
+
+.fade-appear.fade-appear-active {
+  animation-name: fadeIn;
+  animation-play-state: running;
+}
+
+.fade-leave.fade-leave-active {
+  animation-name: fadeOut;
+  animation-play-state: running;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-enter,.fade-appear {
+  animation-duration: 1s;
+}
