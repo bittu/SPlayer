@@ -2,7 +2,17 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import Animate from 'rc-animate';
 import LoadingIndicatorDots from '../LoadingIndicatorDots';
-import Icon, { CHEVRON_DOWN } from '../Icon';
+import ActionLogos, { 
+  LEFT_CHEVRON_EXPORT,
+  PLAY,
+  PAUSE,
+  FULLSCREEN,
+  EXIT_FULLSCREEN,
+  VOLUME,
+  SUBTITLES,
+  EPISODE_LIST
+} from '../ActionLogos';
+import Tooltip from '../Tooltip';
 
 export default class CustomControlBar extends Component {
 
@@ -18,7 +28,10 @@ export default class CustomControlBar extends Component {
     showInfoLayer: false,
     showControlBar: true,
     showTitleLayer: false,
-    showLoading: true
+    showLoading: true,
+    showSeekTime: false,
+    seekPositionX: 0,
+    seekPositionTime: ""
   }
 
   componentDidMount() {
@@ -134,8 +147,6 @@ export default class CustomControlBar extends Component {
 
   handleFullScreenEvent = (e) => {
     this.setFullScreenState(this.isFullScreen());
-    this.handleToggleInfoLayer(false);
-    this.handleToggleSeasonLayer(false);
     this.handleOverlayMouseMove();
   }
 
@@ -213,18 +224,6 @@ export default class CustomControlBar extends Component {
     this.setState({playing: false});
   }
 
-  handleToggleInfoLayer = (bool) => {
-    this.setState({
-      showInfoLayer: typeof bool === "boolean" ? bool : !this.state.showInfoLayer
-    })
-  }
-
-  handleToggleSeasonLayer = (bool) => {
-    this.setState({
-      showSeasonLayer: typeof bool === "boolean" ? bool : !this.state.showSeasonLayer
-    })
-  }
-
   handleToggleVolumeBar = () => {
     clearTimeout(this._volumeTimeout);
     this.setState({
@@ -233,7 +232,7 @@ export default class CustomControlBar extends Component {
     this._volumeTimeout = setTimeout(() => {
       this.setState({
         showVolumeBar: false
-      })
+      });
     }, 2000);
   }
 
@@ -253,22 +252,49 @@ export default class CustomControlBar extends Component {
         showInfoLayer,
         showSeasonLayer
       } = this.state;
-      if (!showVolumeBar && !showInfoLayer && !showSeasonLayer) {
-        this.setState({
-          showControlBar: false,
-          showTitleLayer: false
-        })
-      } else {
-        this.handleOverlayMouseMove();
-      }
-    }, 3000);
+      // if (!showVolumeBar && !showInfoLayer && !showSeasonLayer) {
+      //   this.setState({
+      //     showControlBar: false,
+      //     showTitleLayer: false
+      //   })
+      // } else {
+      //   this.handleOverlayMouseMove();
+      // }
+    }, 5000);
   }
+
+  handleShowSeekTime = (event) => {
+    clearTimeout(this._seekTimeDisplay);
+    const { showSeekTime } = this.state;
+    if (!showSeekTime) {
+      this.setState({ showSeekTime: !showSeekTime });
+    }
+    const currentTimeInSec = Math.round((((event.nativeEvent.offsetX) / event.target.clientWidth)*this.props.player.duration));
+    const minutes = parseInt(currentTimeInSec / 60, 10).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+		const seconds = parseInt(currentTimeInSec % 60, 10).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+    this.setState({
+      seekPositionX: event.pageX,
+      seekPositionTime: `${minutes}:${seconds}`
+    });
+    this._seekTimeDisplay = setTimeout(() => {
+      if (showSeekTime) {
+        this.setState({ showSeekTime: !showSeekTime });
+      }
+    }, 3000)
+  };
 
   togglePlay = () => {
     if (this.props.player.paused) {
       this.props.player.play();
     } else {
       this.props.player.pause();
+    }
+  }
+
+  handleKeyPress = (event) => {
+    const { keyCode } = event;
+    if (keyCode === 0){
+      this.togglePlay();
     }
   }
 
@@ -281,22 +307,35 @@ export default class CustomControlBar extends Component {
   getPlayPauseIcon = (playing) => {
     if (playing) {
       // return <Icon type={PAUSE_ICON}/>
-      return '||'
+      return <ActionLogos logoType={PAUSE}/>
     } else {
       // return <Icon type={PLAY_ICON}/>
-      return '>'
+      return <ActionLogos logoType={PLAY}/>
     }
   }
 
   getFullScreenIcon = (isFullScreen) => {
     if (isFullScreen) {
       // return <Icon type={EXIT_FULLSCREEN_ICON}/>
-      return 'o'
+      return <ActionLogos logoType={EXIT_FULLSCREEN}/>
     } else {
       // return <Icon type={FULLSCREEN_ICON}/>
-      return 'O'
+      return <ActionLogos logoType={FULLSCREEN}/>
     }
   }
+
+  goBack = () => {
+    console.log("going back");
+    // this.props.router.push('/');
+  }
+
+  handleToggleTexTrack = () => {
+    console.log("Toggling text track");
+  };
+
+  handleToggleEpisodelist = () => {
+    console.log("Toggling the episodelist view toggle")
+  };
 
   render () {
     const {
@@ -312,7 +351,10 @@ export default class CustomControlBar extends Component {
       showControlBar,
       showTitleLayer,
       showLoading,
-      showSeasonLayer
+      showSeasonLayer,
+      showSeekTime,
+      seekPositionX,
+      seekPositionTime
     } = this.state;
 
     const wrapperClassNames = classNames('player-wrapper', {
@@ -328,81 +370,67 @@ export default class CustomControlBar extends Component {
 
     return (
       <Animate transitionName="fade">
-        <div className={wrapperClassNames} style={wrapperStyle} onClick={this.togglePlay} onMouseMove={this.handleOverlayMouseMove}>
+        <div className={wrapperClassNames} style={wrapperStyle}>
           {showLoading && <div className="player-loading">
             <LoadingIndicatorDots className={true} />
           </div>}
-          <div className="player-topbar">
-            <a href="#/">
-              <Icon type={CHEVRON_DOWN} className="player-topbar__back"/> Back
-            </a>
+          <div className="player-skin__actionArea" onClick={this.togglePlay} onMouseMove={this.handleOverlayMouseMove} tabIndex="0" onKeyPress={this.handleKeyPress}></div>
+          <Animate transitionName="fade">
+          {showControlBar && <div className="player-topbar">
+          <div className="player-topbar__back" onClick={this.goBack}>
+            <ActionLogos logoType={LEFT_CHEVRON_EXPORT} className="player-topbar__backChevron"/>
+            <span>Back</span>
           </div>
-          <Animate transitionName="fade">
-            {showInfoLayer && <div className="player-infoLayer">
-              <div className="player-infoLayer__wrapper">
-                <button className="player-infoLayer__arrow" onClick={this.handleToggleInfoLayer}>
-                  {/* <Icon type={CHEVRON_DOWN} /> */} V
-                </button>
-                <div className="player-infoLayer__content">
-                  <p className="player-infoLayer__heading">
-                    {/* {item._title} */}Title
-                  </p>
-                  <p className="player-infoLayer__strapline">
-                    {/* {`S${item._seasonNumber} Ep${item._episodeNumber}`} */}
-                    2 1
-                  </p>
-                  <p className="player-infoLayer__description">
-                    {/* {item._longDescription} */}
-                  </p>
-                  <p className="player-infoLayer__rating">
-                    {/* <Icon type={item._rating}/> */} R
-                  </p>
-                </div>
-              </div>
-            </div>}
+          </div>}
           </Animate>
-          <Animate transitionName="fade">
-            {showSeasonLayer && <div className="player-seasonInfoLayer"></div>}
-          </Animate>
+          
           <Animate transitionName="fade">
             {showControlBar && <div className="player-controlBar">
+            <div className="player-controlBar__seekBarContainer">
+            {showSeekTime && <Tooltip locationX={seekPositionX} value={seekPositionTime}/>}
+            <div className="player-controlBar__seekBar" >
+                <div className="player-controlBar__seekTrack">
+                  <div className="player-controlBar__seekBuffer" style={{ width: this.getBufferedPercentage() }}></div>
+                  <div className="player-controlBar__seekFill" style={{ width: this.getPlayedPercentage() }}></div>
+                  <input type="range" orient="horizontal" className="player-controlBar__seekRange" value={seekValue} step="0.0000000000000001"
+                    onMouseDown={this.handleSeekMouseDown}
+                    onMouseUp={this.handleSeekMouseUp}
+                    onChange={this.handleSeekChange}
+                    onMouseMove={this.handleShowSeekTime}
+                    />
+                </div>
+              </div>
+              <time className="player-controlBar__elapsedTime">{currentTime} / </time>
+              <time className="player-controlBar__totalTime">{duration}</time>
+            </div>
+            <div className="player-controlBar__controlsContainer">
               <button className="player-controlBar__play" onClick={this.togglePlay}>{this.getPlayPauseIcon(playing)}</button>
               <div className="player-controlBar__volume"
                   onMouseOver={this.handleToggleVolumeBar}>
                 <button className="player-controlBar__volumeButton" onClick={this.handleToggleMute} style={{opacity: `${muted ? '0.5' : '1'}`}}>
-                  {/* <Icon type={VOLUME_ICON} /> */}
-                  )))
+                  <ActionLogos logoType={VOLUME} />
                 </button>
                   <Animate transitionName="fade">
                     {showVolumeBar && <div className="player-controlBar__volumeBar" key="1" onMouseOver={this.handleToggleVolumeBar} onMouseMove={this.handleToggleVolumeBar}>
                       <div className="player-controlBar__volumeTrack">
                         <div className="player-controlBar__volumeFill" style={{ width: this.getVolumePercentage() }}></div>
-                        <input type="range" className="player-controlBar__volumeRange" min="0" max="1" step="0.1" value={volume}
+                        <input type="range" className="player-controlBar__volumeRange" min="0" max="1" step="0.01" value={volume}
                           onChange={this.handleVolumeChange} />
                         </div>
                     </div>}
                   </Animate>
               </div>
-              <time className="player-controlBar__elapsedTime">{currentTime}</time>
-              <div className="player-controlBar__seekBar">
-                <div className="player-controlBar__seekTrack">
-                  <div className="player-controlBar__seekBuffer" style={{ width: this.getBufferedPercentage() }}></div>
-                  <div className="player-controlBar__seekFill" style={{ width: this.getPlayedPercentage() }}></div>
-                  <input type="range" orient="horizontal" className="player-controlBar__seekRange" value={seekValue}
-                    onMouseDown={this.handleSeekMouseDown}
-                    onMouseUp={this.handleSeekMouseUp}
-                    onChange={this.handleSeekChange}/>
-                </div>
+              <div className="player-infoLayer">
+               {/* {`{item._episodeNumber}`} */}14. {/* {item._title} */}The Winter is coming and I am freezing
               </div>
-              <time className="player-controlBar__totalTime">{duration}</time>
-              {isFullScreen && <button className="player-controlBar__info" onClick={this.handleToggleInfoLayer}>
-                  {/* <Icon type={INFO_ICON} /> */} i
-                </button>}
-              {isFullScreen && <button className="player-controlBar__seasonInfo" onClick={this.handleToggleSeasonLayer}>
-                  {/* <Icon type={EXTRA_INFO_ICON} /> */} I
-                </button>}
-              <button className="player-controlBar__fullScreen" onClick={this.handleToggleFullScreen}>{this.getFullScreenIcon(isFullScreen)}</button>
-            </div>}
+              <div className="player-controlBar__fullScreen">
+              <button  onClick={this.handleToggleFullScreen}><ActionLogos logoType={SUBTITLES} /></button>
+              <button  onClick={this.handleToggleFullScreen}><ActionLogos logoType={EPISODE_LIST} /></button>
+              <button  onClick={this.handleToggleFullScreen}>{this.getFullScreenIcon(isFullScreen)}</button>
+              </div>
+            </div>
+            </div>
+            }
           </Animate>
         </div>
       </Animate>

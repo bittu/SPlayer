@@ -16,6 +16,8 @@ export const FULLSCREEN = 'FULLSCREEN';
 export const EXIT_FULLSCREEN = 'EXIT_FULLSCREEN';
 export const CHEVRON_DOWN = 'CHEVRON_DOWN';
 export const EXTRA_INFO = 'EXTRA_INFO';
+export const SUBTITLES = 'SUBTITLES';
+export const EPISODE_LIST = 'EPISODE_LIST';
 
 const LOGIN = 'login';
 const LOGOUT = 'logout';
@@ -51,6 +53,15 @@ class ActionLogos extends Component {
 		let logoJsx;
     logoPosition = logoPosition || 'pull-left'
 		switch (logoType){
+      case EPISODE_LIST:
+        logoJsx = <span className={className}>&#xE859;</span>
+        break;
+      case SUBTITLES:
+        logoJsx = <span className={className}>&#xE842;</span>
+        break;
+      case LEFT_CHEVRON_EXPORT:
+        logoJsx = <span className={className}>&#xE804;</span>
+        break;
 			case CLOSE_ICON:
 				logoJsx = <p className="closeIcon">&#xE806;</p>;
 				break;

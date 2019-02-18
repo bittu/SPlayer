@@ -14,7 +14,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 1;
 }
 
 
@@ -23,9 +23,14 @@
   clear: both;
 }
 
+.player-skin__actionArea{
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
 .player-titleLayer,
 .player-overlay,
-.player-infoLayer,
 .player-seasonInfoLayer,
 .player-controlBar,
 .player-video {
@@ -39,7 +44,6 @@
   top: 0;
 }
 
-.player-infoLayer,
 .player-overlay,
 .player-loading,
 .player-video {
@@ -49,28 +53,25 @@
 .player-video {
   background: rgba(0, 0, 0, 0.5);
 }
-.player-overlay,
-.player-infoLayer {
+.player-overlay{
   z-index: 1;
 }
-.player-controlBar {
-  bottom: 0;
-  display: flex;
-  padding: 25px 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-  z-index: 5;
-  align-items: center;
-}
+
 .player-controlBar button,
-.player-controlBar time,
 .player-controlBar__seekBar,
-.player-titleLayer__close,
-.player-infoLayer__arrow {
+.player-titleLayer__close {
   margin-right: 15px;
   color: #ffffff;
   background: transparent;
   outline: 0;
   border: 0;
+}
+
+
+.player-controlBar time{
+  color: #ffffff;
+  font-size: 20px;
+  margin-right: 5px;
 }
 
 .player-titleLayer {
@@ -92,16 +93,41 @@
 .player-controlBar .actionLogo  {
   font-size: 30px;
 }
-.player-controlBar time {
-  font-size: 16px;
-  margin: 10px 20px 0;
-}
-button.player-controlBar__fullScreen {
+.player-controlBar__fullScreen {
   margin-right: 35px;
   margin-bottom: 7px;
+  position: absolute;
+  right: 0px;
 }
 .player-controlBar__play {
   margin-left: 15px;
+}
+
+.player-topbar{
+  position: absolute;
+  top: 0px;
+  z-index: 5;
+}
+
+.player-topbar__back{
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
+.player-topbar__back span{
+  font-size: 22px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 0.91;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+
+.player-topbar__backChevron{
+  width: 20px;
+  height: 36px;
 }
 
 .player-loading {
@@ -131,18 +157,18 @@ button.player-controlBar__fullScreen {
 }
 .player-controlBar__volumeBar {
   position: absolute;
-  top: -70px;
-  left: -33px;
-  background: #ffffff;
-  height: 25px;
-  width: 100px;
-  border-radius: 10px;
+  top: -130px;
+  left: -76px;
+  background: #4e4953;
+  height: 37px;
+  width: 197px;
+  border-radius: 5px;
   transform: rotate(270deg);
   /*display: none;*/
   z-index: 2;
 }
 .player-controlBar__volumeBar::after {
-  right: 98%;
+  right: 100%;
 	top: 50%;
 	border: solid transparent;
 	content: " ";
@@ -150,7 +176,7 @@ button.player-controlBar__fullScreen {
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	border-right-color: #ffffff;
+	border-right-color: #4e4953;
 	border-width: 8px;
 	margin-top: -8px;
 }
@@ -160,29 +186,29 @@ button.player-controlBar__fullScreen {
 }
 .player-controlBar__volumeTrack {
   background-color: rgba(0, 0, 0, 0.3);
-  width: 80px;
+  width: 160px;
   height: 5px;
   position: absolute;
-  top: 10px;
+  top: 15px;
   left: 8px;
 }
 input[type=range].player-controlBar__volumeRange {
   opacity: 0;
   z-index: 1;
-  width: 80px;
+  width: 160px;
   position: absolute;
   top: -10px;
 }
 
 .player-controlBar__volumeFill {
-  background-color: #00427e;
-  position: absolute;
-  left: 0px;
-  height: 100%;
+  background-color: #ffffff;
+    position: absolute;
+    left: 0px;
+    height: 100%;
 }
 .player-controlBar__volumeFill::after {
   content: '';
-  border: 5px solid #00427e;
+  border: 5px solid #ffffff;
   border-radius: 50%;
   position: absolute;
   right: -5px;
@@ -190,12 +216,12 @@ input[type=range].player-controlBar__volumeRange {
 }
 
 /* Info layer */
-.player-infoLayer,
 .player-seasonInfoLayer {
   background: linear-gradient(to top, rgba(0, 66, 126, 0.7), rgba(0, 0, 0, 0));
   text-align: left;
 }
-.player-infoLayer__wrapper {
+
+/* .player-infoLayer__wrapper {
   position: absolute;
   bottom: 70px;
   left: 0;
@@ -232,6 +258,17 @@ input[type=range].player-controlBar__volumeRange {
   letter-spacing: 0.6px;
   color: hsla(0, 0%, 100%, 0.8);
   min-height: 50px;
+} */
+
+.player-infoLayer {
+  height: 30px;
+  font-size: 26px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: #ffffff;
 }
 
 /* full screen */
@@ -249,8 +286,13 @@ html:-ms-fullscreen {
   z-index: 2;
 }
 
-.player-wrapper.player-fullscreen .player-controlBar {
-  background: linear-gradient(to top, rgba(0, 66, 126, 0.7), rgba(0, 0, 0, 0));
+ .player-controlBar {
+  z-index: 5;
+  background: transparent;
+  bottom: 0;
+  padding: 25px 0;
+  z-index: 5;
+  align-items: center;
 }
 
 /* seek bar */
@@ -260,6 +302,17 @@ html:-ms-fullscreen {
     position: relative;
     margin: 10px 20px 0;
 }
+
+.player-controlBar__seekBarContainer{
+  width: 100%;
+  display: flex;
+  margin-bottom:29px;
+} 
+.player-controlBar__controlsContainer{
+  width: 100%;
+  display: flex;
+}
+
 .player-controlBar__seekTrack {
   right: 0;
   height: 5px;
@@ -298,11 +351,11 @@ html:-ms-fullscreen {
   background-color: #5a5a5a;
 }
 .player-controlBar__seekFill {
-  background: #ff00fc;
+  background: #00a0d6;
 }
 .player-controlBar__seekFill::after {
   content: '';
-  border: 8px solid #ff00fc;
+  border: 8px solid #ffffff;
   border-radius: 50%;
   position: absolute;
   right: -5px;
@@ -317,7 +370,6 @@ html:-ms-fullscreen {
 .player-controlBar button,
 .player-controlBar__seekRange,
 .player-controlBar__volumeRange,
-.player-infoLayer__arrow,
 .player-titleLayer__close {
   cursor: pointer;
 }
