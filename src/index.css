@@ -1,13 +1,15 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: BTTV_Rg;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(34, 28, 40);
   color: #fff;
+}
+
+.actionLogo{
+  font-family: BTTV_Rg;
 }
 
 code {
@@ -25,7 +27,7 @@ body,
 
 .container {
   /* width: 1024px; */
-  margin: 0 auto;
+  margin: 0 auto ;
   height: 100%;
 }
 
@@ -60,3 +62,4 @@ body,
   font-weight: normal;
   font-style: normal;
 }
+

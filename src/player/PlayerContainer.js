@@ -65,7 +65,7 @@ export default class PlayerContainer extends Component {
         resolve({
           src: '//cdn.theoplayer.com/video/star_wars_episode_vii-the_force_awakens_official_comic-con_2015_reel_(2015)/index.m3u8'
         })
-      }, 5000)
+      }, 1000)
     })
   }
 
@@ -80,6 +80,7 @@ export default class PlayerContainer extends Component {
         {loaded
         &&  <CustomControlBar
           player={window.theoPlayer}
+          router={this.props.router}
         ></CustomControlBar>
         }
         <Animate
